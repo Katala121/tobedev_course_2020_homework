@@ -15,6 +15,62 @@ const getLine = (function () {
     return async () => ((await getLineGen.next()).value);
 })();
 
+function isPhoneBookNotEmpty(){
+    return Object.keys(phoneBook).length !== 0;
+}
+ 
+async function addContact(){
+    console.log('Введите имя');
+    const contactName = String(await getLine());
+    console.log('Введите номер телефона');
+    const contactPhone = Number(await getLine());
+
+    phoneBook[contactName] = contactPhone;
+    console.log(`Создан контакт: ${contactName}   ${contactPhone}`);
+}
+
+async function printPhoneBook(){
+    if( isPhoneBookNotEmpty() ){ 
+        console.log('\t__ТЕЛЕФОННАЯ КНИГА__\n');
+        for(let key in phoneBook){
+            console.log(`\t${key}\t|\t${phoneBook[key]}`);
+        }
+    }else{
+        console.log('\tТелефонная книга пуста!');
+    }
+}
+
+async function searchContact(){
+    if( isPhoneBookNotEmpty()){ 
+        console.log('Введите имя для поиска');
+        const searchName = String(await getLine());
+        
+        if(searchName in phoneBook){
+            console.log(`\t${searchName}\t|\t${phoneBook[searchName]}`);
+        }else{
+            console.log(`Нет контакта с именем ${searchName} в телефонной книге`);
+        }
+    }else{
+        console.log('\tТелефонная книга пуста!');
+    }
+    
+}                                  
+
+async function deleteContact(){
+    if( isPhoneBookNotEmpty()){   
+        console.log('Введите имя контакта');
+        const deleteName = String(await getLine());
+        if(deleteName in phoneBook){
+            delete phoneBook[deleteName];
+            console.log(`контакт ${deleteName} удален`);
+        }else{
+            console.log(`Нет контакта с именем ${deleteName} в телефонной книге`);
+        }
+    }else{
+        console.log('\tТелефонная книга пуста!');
+    }
+}
+
 const main = async () => {
     console.log('В вашем распоржении телефонная книга');
     console.log('Используйте команды приведенные ниже:');
@@ -42,58 +98,3 @@ const main = async () => {
 };
 
 main();
- 
-async function addContact(){
-    console.log('Введите имя');
-    const contactName = String(await getLine());
-    console.log('Введите номер телефона');
-    const contactPhone = Number(await getLine());
-
-    phoneBook[contactName] = contactPhone;
-    console.log(`Создан контакт: ${contactName}   ${contactPhone}`);
-}
-
-async function printPhoneBook(){
-    if(Object.keys(phoneBook).length == 0){
-        console.log('В телефонной книге нет контактов\n');
-        return;
-    }
-    console.log('\t__ТЕЛЕФОННАЯ КНИГА__\n');
-    for(let key in phoneBook){
-        console.log(`\t${key}\t|\t${phoneBook[key]}`);
-    }
-}
-
-async function searchContact(){
-    if(Object.keys(phoneBook).length == 0){
-        console.log('В телефонной книге нет контактов\n');
-        return;
-    }
-    console.log('Введите имя для поиска');
-    const searchName = String(await getLine());
-    for(let key in phoneBook){
-        if(key == searchName){
-            console.log(`\t${key}\t|\t${phoneBook[key]}`);
-        }else{
-                console.log(`Нет контакта с именем ${searchName} в телефонной книге`);
-            }
-        }
-}                                  
-
-
-async function deleteContact(){
-    if(Object.keys(phoneBook).length == 0){
-        console.log('В телефонной книге нет контактов\n');
-        return;
-    }
-    console.log('Введите имя контакта');
-    const deleteName = String(await getLine());
-    for(let key in phoneBook){
-        if(key == deleteName){ 
-            delete phoneBook[key];
-            console.log(`контакт ${key} удален`);
-        }else{
-            console.log(`Нет контакта с именем ${deleteName} в телефонной книге`);
-        }
-    }
-}
