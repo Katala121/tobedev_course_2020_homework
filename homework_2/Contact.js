@@ -3,15 +3,23 @@ const phoneBook = require('./PhoneBook');
 const ConsoleReader = require('./ConsoleReader');
 const isPhoneBookNotEmpty = require('./IsPhoneBookNotEmpty');
 const massagePrinter = require('./MassagePrinter');
+const isValid = require('./IsValidData');
 
 async function addContact(){
     massagePrinter.printTooltip('Введите имя');
     const contactName = String(await ConsoleReader.getLine());
+    if(!isValid.isValidName(contactName)){
+        massagePrinter.printError('Введен неправильный формат имени!\nИмя должно быть на русском языке и с заглавной буквы.');
+    }
     massagePrinter.printTooltip('Введите номер телефона');
-    const contactPhone = Number(await ConsoleReader.getLine());
+    const contactPhone = String(await ConsoleReader.getLine());
 
-    phoneBook[contactName] = contactPhone;
-    massagePrinter.printMassage(`Создан контакт: ${contactName}   ${contactPhone}`);
+    if(isValid.isValidTel(contactPhone)){
+        phoneBook[contactName] = contactPhone;
+        massagePrinter.printMassage(`Создан контакт: ${contactName}   ${contactPhone}`);
+    }else{
+        massagePrinter.printError('Введен неправильный формат номера телефона!');
+    }
 }
 
 async function printPhoneBook(){
