@@ -1,8 +1,7 @@
-'use strict'
-const phoneBook = require('./PhoneBook');
+'use strict';
 
-function isPhoneBookNotEmpty(){
-    return phoneBook.contacts.length !== 0;
+function isPhoneBookNotEmpty(contacts) {
+    return contacts.length !== 0;
 }
 
 module.exports.isPhoneBookNotEmpty = isPhoneBookNotEmpty;

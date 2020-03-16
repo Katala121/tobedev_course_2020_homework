@@ -1,4 +1,4 @@
-function Contact(name,phone){
+function Contact(name, phone) {
     this.name = name;
     this.phone = phone;
 }

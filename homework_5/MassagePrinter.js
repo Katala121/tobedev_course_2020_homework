@@ -1,15 +1,15 @@
-'use strict'
+'use strict';
 const chalk = require('chalk');
 
-function printTooltip(massage){
+function printTooltip(massage) {
     console.log(chalk.blue.bold(massage));
 }
 
-function printError(massage){
+function printError(massage) {
     console.log(chalk.red(massage));
 }
 
-function printMassage(massage){
+function printMassage(massage) {
     console.log(chalk.hex('#00ffea')(massage));
 }
 
